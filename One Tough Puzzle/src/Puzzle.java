@@ -21,6 +21,26 @@ public class Puzzle {
         this.board = board;
     }
 
+    public static boolean testPuzzle (Puzzle p)
+    {
+        return testLeft(p, 1) && testLeft(p,2) && testUp(p,3) && testBoth(p,4) && testBoth(p,5) && testUp(p,6) && testBoth(p,7) && testBoth(p,8);
+    }
+
+    public static boolean testLeft(Puzzle p, int piece)
+    {
+        return p.board.get(piece-1).getSides()[1] + p.board.get(piece).getSides()[3] == 0;
+    }
+
+    public static boolean testUp(Puzzle p, int piece)
+    {
+        return p.board.get(piece-3).getSides()[2] + p.board.get(piece).getSides()[0] == 0;
+    }
+    
+    public static boolean testBoth(Puzzle p, int piece)
+    {
+        return p.board.get(piece-3).getSides()[2] + p.board.get(piece).getSides()[0] == 0 && p.board.get(piece-1).getSides()[1] + p.board.get(piece).getSides()[3] == 0;
+    }
+
     @SuppressWarnings("finally")
     public static Puzzle readFile(File f) throws IOException {
         //Piece[][] board = new Piece[3][3];
