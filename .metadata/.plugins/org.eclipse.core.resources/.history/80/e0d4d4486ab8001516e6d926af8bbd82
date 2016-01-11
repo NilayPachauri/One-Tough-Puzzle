@@ -1,0 +1,241 @@
+
+//import necessary classes
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.LineNumberReader;
+import java.util.ArrayList;
+import java.util.Random;
+
+import javax.swing.JOptionPane;
+
+public class Puzzle // class Puzzle
+{
+	ArrayList<Piece> board; // instnace field to reflect the array list of
+							// pieces (will be used to show the final solution
+							// of pieces)
+
+	public Puzzle() // constructor of the ArrayList; initializes the board
+					// variable with a blank ArrayList
+	{
+		board = new ArrayList<Piece>();
+	}
+
+	public Puzzle(ArrayList<Piece> board) // constructor of the ArrayList;
+											// initializes the board variable
+											// with the explicit parameter
+	{
+		this.board = board;
+	}
+
+	public boolean testLeft(int num)	{
+		return (this.board.get(num - 1).getRightSide() + this.board.get(num).getLeftSide() == 0) ? true : false;
+	}
+	
+	public boolean testUp(int num)	{
+		return (this.board.get(num - 3).getBottomSide() + this.board.get(num).getTopSide() == 0) ? true : false;
+	}
+	
+//	public static boolean testPuzzle(Puzzle p) // method that checks if the
+//												// puzzle works
+//	{
+//		return testLeft(p, 1) && testLeft(p, 2) && testUp(p, 3) && testBoth(p, 4) && testBoth(p, 5) && testUp(p, 6)
+//				&& testBoth(p, 7) && testBoth(p, 8);
+//	}
+//
+//	public static boolean testLeft(Puzzle p, int piece) // if the left puzzle
+//														// piece's right side
+//														// fits with the right
+//														// puzzle piece's left
+//														// side
+//	{
+//		return p.board.get(piece - 1).getSides()[1] + p.board.get(piece).getSides()[3] == 0;
+//	}
+//
+//	public static boolean testUp(Puzzle p, int piece) // if the bottom puzzle
+//														// piece's top side fits
+//														// with the top puzzle
+//														// piece's bottom side
+//	{
+//		return p.board.get(piece - 3).getSides()[2] + p.board.get(piece).getSides()[0] == 0;
+//	}
+//
+//	public static boolean testBoth(Puzzle p, int piece) // if the bottom puzzle
+//														// piece's top side fits
+//														// with the top puzzle
+//														// piece's bottom side
+//														// AND if the left
+//														// puzzle piece's right
+//														// side fits with the
+//														// right puzzle piece's
+//														// left side
+//	{
+//		return p.board.get(piece - 3).getSides()[2] + p.board.get(piece).getSides()[0] == 0
+//				&& p.board.get(piece - 1).getSides()[1] + p.board.get(piece).getSides()[3] == 0;
+//	}
+
+	@SuppressWarnings("finally")
+	public static Puzzle readFile(File f) throws IOException // method to
+																// effectively
+																// read the
+																// pieces and
+																// place them on
+																// the board
+	{
+		// Piece[][] board = new Piece[3][3];
+		ArrayList<Piece> board = new ArrayList<Piece>(); // ArrayList of pieces
+															// representing the
+															// board
+		LineNumberReader lnr = new LineNumberReader(new FileReader(f)); // reader
+																		// to
+																		// read
+																		// in
+																		// the
+																		// file
+		lnr.skip(Long.MAX_VALUE);
+
+		if (lnr.getLineNumber() + 1 != 9) // if the value of the puzzle + 1 is
+											// not equal to 9
+		{
+			JOptionPane.showMessageDialog(null, "THERE ARE AN INCORRECT NUMBER OF LINES IN YOUR FILE. FILE NOT READ", // the
+																														// user
+																														// has
+																														// inputted
+																														// an
+																														// incorret
+																														// puzzle
+					"ERROR", JOptionPane.WARNING_MESSAGE);
+			return new Puzzle(new ArrayList<Piece>()); // return simply a blank
+														// puzzle (basically,
+														// the program has not
+														// worked due to a user
+														// error
+		} else {
+			JOptionPane.showMessageDialog(null, "File read successfully", "Success", JOptionPane.INFORMATION_MESSAGE); // the
+																														// user
+																														// has
+																														// inputted
+																														// an
+																														// acceptable
+																														// puzzle
+		}
+
+		BufferedReader br = new BufferedReader(new FileReader(f)); // constructs
+																	// a reader
+																	// to read
+																	// in the
+																	// actual
+																	// contents
+																	// of the
+																	// file
+																	// (rather
+																	// than
+																	// simply
+																	// the size)
+
+		String line; // temp variable line
+//		String[] parsedElements; // array of strings to hold parsed elements
+		int count = 0; // count var.
+
+		try // try the following code
+		{
+			while ((line = br.readLine()) != null) // while information is left
+			{
+				count++; // increase count
+				String[] parsedElements = line.split(","); // grab each element and add
+													// it to the array
+				int[] sides = new int[4];	//array of the sides of each piece
+
+				for (int i = 0; i < parsedElements.length; ++i) {
+					sides[i] = Integer.parseInt(parsedElements[i]); // fill up
+																	// the sides
+																	// array
+				}
+
+				board.add(new Piece(sides, "Piece " + count)); // add
+																			// each
+																			// piece
+																			// to
+																			// the
+																			// array
+																			// list
+			}
+		} catch (NumberFormatException | IOException e) // catch any erors that
+														// may occur of type
+														// NumberFormatException
+														// and IOException
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally // when all is said and done...
+		{
+			br.close(); // close the reader
+			return new Puzzle(board); // return the board, unformatted but
+										// filled
+		}
+	}
+
+	public static File generateFile() throws IOException // method to generate
+															// the actual
+															// solution
+	{
+		String fileName = JOptionPane.showInputDialog(null,
+				"Please enter the name you wish to give your genereated file", "Name", JOptionPane.INFORMATION_MESSAGE); // recieves
+																															// the
+																															// file
+																															// name
+																															// of
+																															// the
+																															// user's
+																															// choice
+		File f = new File(fileName); // creates a file with the user's file name
+		BufferedWriter bw = new BufferedWriter(new FileWriter(f)); // creates a
+																	// writer to
+																	// write to
+																	// the file
+
+		ArrayList<Integer> protrusions = new ArrayList<>(); // the array list of
+															// total outward
+															// parts of the
+															// piece
+		ArrayList<Integer> receptors = new ArrayList<>(); // the array list of
+															// the total inward
+															// parts of the
+															// piece
+
+		Random rand = new Random(); // randmo generator
+		int guess; // temp int. guess
+
+		for (int i = 0; i < 18; i++) // such that each piece has two protrusions
+										// and two receptors...
+		{
+			guess = rand.nextInt(4) + 1;
+
+			protrusions.add(guess); // add a protrusion
+			receptors.add(Integer.parseInt("-" + guess)); // add a receptor
+		}
+
+		for (int i = 0; i < 36; i++) {
+			if ((i % 4) <= 1) {
+				if ((i != 0) && (i % 4) == 0) // if teh two pieces fit
+				{
+					bw.newLine(); // move on
+				}
+				bw.write(protrusions.remove(rand.nextInt(protrusions.size())).toString() + ",");
+			} else if ((i % 4) >= 2) {
+				bw.write(receptors.remove(rand.nextInt(receptors.size())).toString());
+				if ((i % 4) != 3) {
+					bw.write(',');
+				}
+			}
+		}
+
+		bw.flush(); // flush and exit the writer
+		bw.close();
+
+		return f; // return the file
+	}
+}

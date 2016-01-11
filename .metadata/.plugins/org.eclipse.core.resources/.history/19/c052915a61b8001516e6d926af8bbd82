@@ -1,0 +1,165 @@
+/**
+ * Write a description of class Piece here.
+ *
+ * @Ryan Chandra
+ * @version (a version number or a date)
+ */
+public class Piece // class representing the Piece objects
+{
+
+	// H = 1; D = 2; C = 3; S = 4;
+	// H in = -1; D in = -2; C in = -3; S in = -4;
+	// ORIENTATION: 0 is starting, 1 is 90 degrees, 2 is 180 degrees, 3 is 270
+	// degrees (flipped clockwise)
+	private int[] sides; // array with the sides (as ints)
+	private int orientation; // orientation as an int
+	private String name; // ID
+
+	public Piece(int[] newSides, String newName)
+	// constructor initializing the sides (integer values -- see above), the
+	// orientation, and the name of the piece
+	{
+		sides = newSides;
+		orientation = 0;
+		name = newName;
+	}
+
+	/**
+	 * @return the sides
+	 */
+	public int[] getSides() // accessor to returns the array of sides
+	{
+		return sides;
+	}
+
+	/**
+	 * @param sides
+	 *            the sides to set
+	 */
+	public void setSides(int[] sides) // mutates the value of the sides with the
+										// given value of the explicit parameter
+	{
+		this.sides = sides;
+	}
+
+	/**
+	 * @return the orientation
+	 */
+	public int getOrientation() // accessor to returns the orientation
+	{
+		return orientation;
+	}
+
+	/**
+	 * @param orientation
+	 *            the orientation to set
+	 */
+	public void setOrientation(int orientation) // mutates the orientatoin with
+												// the given value of the
+												// explicit parameter
+	{
+		int dif = orientation % 4 - this.orientation;
+		
+		if (dif == 1 || dif == -3)	{
+			this.turnRight();
+		} else if (dif == -1 || dif == 3)	{
+			this.turnLeft();
+		} else if (dif == 2 || dif == -2)	{
+			this.turnBack();
+		}
+	}
+
+	/**
+	 * @return the name
+	 */
+	public String getName() // accessor to recieve the name of the object
+	{
+		return name;
+	}
+
+	/**
+	 * @param name
+	 *            the name to set
+	 */
+	public void setName(String name) // mutates the name of the Piece with the
+										// given value of the explicit parameter
+	{
+		this.name = name;
+	}
+
+	private void turnRight() // method to shift the piece to the right
+	{
+		orientation = ++orientation % 4; // flips the orientation value to the
+											// right (mod. 4 is effective
+											// because the orientation is valid
+											// based off of the remainder of the
+											// orientation (0,1,2,3) rather than
+											// the value
+		int[] newSides = new int[4]; // an array of the sides (will be altered
+										// to reflect new values)
+
+		for (int i = 0; i < sides.length; i++) // for each of the sides
+		{
+			newSides[++i % 4] = sides[i]; // flips the sides (such that the
+											// topmost becomes the rightmost,
+											// etc.)
+		}
+
+		sides = newSides; // reassigns the side array to the new sides
+	}
+
+	private void turnLeft() // method to shift the piece to the left
+	{
+		orientation = (orientation + 3) % 4; // flips the orientation value to the
+											// right (mod. 4 is effective
+											// because the orientation is valid
+											// based off of the remainder of the
+											// orientation (0,1,2,3) rather than
+											// the value
+		int[] newSides = new int[4]; // an array of the sides (will be altered
+										// to reflect new values)
+
+		for (int i = 0; i < sides.length; i++) // for each of the sides
+		{
+			newSides[i] = sides[(i + 3) % 4]; // flips the sides (such that the
+											// topmost becomes the leftmost,
+											// etc.)
+		}
+
+		sides = newSides; // reassigns the side array to the new sides
+	}
+
+	private void turnBack() // method to flip the piece upside down
+	{
+		orientation = (orientation + 2) % 4; // changes the orientation value by
+												// two to reflect the new
+												// orientaiton
+		int[] newSides = new int[4]; // an array of the sides (will be altered
+										// to reflect new values)
+
+		for (int i = 0; i < sides.length; i++) // for each of the sides
+		{
+			newSides[i] = sides[(i + 2) % 4]; // flips the sides (such that the
+												// topmost becomes the leftmost,
+												// etc.)
+		}
+
+		sides = newSides; // reassigns the side array to the new sides
+	}
+	
+	public int getTopSide()	{
+		return sides[0];
+	}
+	
+	public int getRightSide()	{
+		return sides[1];
+	}
+
+	public int getBottomSide()	{
+		return sides[2];
+	}
+
+	public int getLeftSide()	{
+		return sides[3];
+	}
+}

@@ -1,0 +1,18 @@
+import java.util.concurrent.TimeUnit;
+
+public class Win {
+	Puzzle p;
+	int iterNum;
+	String duration;
+	
+	public Win(Puzzle p, int iterNum, long duration)	{
+		this.p = p;
+		this.iterNum = iterNum;
+		
+		long diffInSeconds = TimeUnit.MILLISECONDS.toSeconds(duration);
+		long diffInMinutes = TimeUnit.MILLISECONDS.toMinutes(duration);
+		long diffInHours = TimeUnit.MILLISECONDS.toHours(duration);
+		
+		this.duration = diffInHours + " hours, " + diffInMinutes + " minutes, " + diffInSeconds + " seconds";
+	}
+}

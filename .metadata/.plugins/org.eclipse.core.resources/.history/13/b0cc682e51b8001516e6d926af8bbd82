@@ -1,0 +1,27 @@
+import java.io.File;
+import java.io.IOException;
+
+public class Game {
+
+	public static void main(String args[]) throws IOException	{
+		File f = Puzzle.generateFile(); //generate the user's file
+        Puzzle p = Puzzle.readFile(f); //construct the solved puzzle based on the information
+		System.out.println("Lel");
+	}
+	
+	public solve(Puzzle solvedPuzzle, Puzzle remainingPieces)	{
+		switch (solvedPuzzle.board.size())	{
+		case 0:	{
+			Puzzle possiblySolved = null;
+			while (possiblySolved.board.size() == 9) {
+				int pieceCount = 0;
+				int orientation = 0;
+				Piece chosenPiece = remainingPieces.board.remove(pieceCount);
+				chosenPiece.setOrientation(orientation);
+				solvedPuzzle.board.add(chosenPiece);
+				Puzzle possiblySolved = solve(solvedPuzzle, remainingPieces);
+			}
+		}
+		}
+	}
+}

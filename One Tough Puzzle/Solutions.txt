@@ -1,0 +1,16 @@
+,133724,0 minutes, 0 seconds, 20 milliseconds, 20469 microseconds
+,133724,0 minutes, 0 seconds, 22 milliseconds, 22375 microseconds
+,133724,0 minutes, 0 seconds, 22 milliseconds, 22635 microseconds
+,133724,0 minutes, 0 seconds, 22 milliseconds, 22850 microseconds
+,133724,0 minutes, 0 seconds, 28 milliseconds, 28393 microseconds
+,133724,0 minutes, 0 seconds, 28 milliseconds, 28625 microseconds
+,133724,0 minutes, 0 seconds, 29 milliseconds, 29079 microseconds
+,133724,0 minutes, 0 seconds, 29 milliseconds, 29241 microseconds
+,133724,0 minutes, 0 seconds, 31 milliseconds, 31035 microseconds
+,133724,0 minutes, 0 seconds, 31 milliseconds, 31304 microseconds
+,133724,0 minutes, 0 seconds, 39 milliseconds, 39699 microseconds
+,133724,0 minutes, 0 seconds, 39 milliseconds, 39969 microseconds
+,133724,0 minutes, 0 seconds, 50 milliseconds, 50735 microseconds
+,133724,0 minutes, 0 seconds, 51 milliseconds, 51007 microseconds
+,133724,0 minutes, 0 seconds, 51 milliseconds, 51197 microseconds
+,133724,0 minutes, 0 seconds, 51 milliseconds, 51373 microseconds
